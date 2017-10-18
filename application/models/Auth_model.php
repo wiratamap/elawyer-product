@@ -50,10 +50,10 @@ class Auth_model extends CI_Model {
   public function get_is_logged_in($select, $table, $param) {
     $this->db->select($select);
     $this->db->from($table);
-    $this->db->where('username', $param);
+    $this->db->where('USERNAME', $param);
     $query = $this->db->get();
     $ret = $query->row();
-    return $ret->is_logged_in;
+    return $ret->ISLOGGEDIN;
   }
 
   public function is_logged_in_update($username, $value) {
