@@ -83,3 +83,25 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/*
+|--------------------------------------------------------------------------
+| APPLICATIONS GENERAL SETTINGS
+|--------------------------------------------------------------------------
+*/
+define('app_version', '1.0.0');
+define('copyright_year', '2017');
+define('copyright_by', 'PastiJadi Solutions');
+define('copyright_link', 'https://pastijadi.id');
+
+/*
+|--------------------------------------------------------------------------
+| USER ROLES VALUE
+|--------------------------------------------------------------------------
+*/
+define('super_administrator', 'UR0001');
+define('elawyer_administrator', 'UR0002');
+define('consultant', 'UR0003');
+define('lawyer', 'UR0004');
+define('client', 'UR0005');
+define('finance', 'UR0006');
