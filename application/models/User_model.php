@@ -19,6 +19,13 @@ class User_model extends CI_Model {
   //   return $this->db->insert('ms_user', $data);
   // }
   //
+  public function is_exist($select, $table, $where) {
+    $this->db->select($select);
+    $this->db->from($table);
+    $this->db->where($select, $where);
+    $query = $this->db->get();
+    return $query->result();
+  }
   //
   // public function get_all_user() {
   //   $query = $this->db->query("select ms_user.*, ms_subsystem.subsystem_value
