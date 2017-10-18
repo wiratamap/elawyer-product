@@ -16,58 +16,63 @@ class Auth extends CI_Controller {
 		$this->load->view('layout-templates/login/footer');
 	}
 
-	// public function authentication() {
-	// 	$username = $this->input->post('username');
-	// 	$password = $this->input->post('password');
-	//
-	// 	$where = array(
-	// 		'username' => $username,
-	// 		'password' => md5($password)
-	// 	);
-	//
-	// 	$result = $this->auth_model->login_validate('ms_user', $where)->num_rows();
-	//
-	// 	if($result>0) {
-	// 		if($this->auth_model->get_is_active('is_active', 'ms_user', $username) == "1") {
-	// 			if($this->auth_model->get_is_logged_in('is_logged_in', 'ms_user', $username) == "0") {
-	// 				$this->auth_model->is_logged_in_update($username, "1");
-	// 				$data_session = array(
-	// 					'username' => $username,
-	// 					'full_name' => $this->auth_model->get_one('full_name', 'ms_user', $username),
-	// 					'uuid_ms_subsystem' => $this->auth_model->get_one('uuid_ms_subsystem', 'ms_user', $username),
-	// 					'uuid_ms_user' => $this->auth_model->get_one('uuid_ms_user', 'ms_user', $username),
-	// 					'dtm_crt' => $this->auth_model->get_one('dtm_crt', 'ms_user', $username),
-	// 					'is_logged_in' => $this->auth_model->get_one('is_logged_in', 'ms_user', $username),
-	// 					'prm_appversion' => $this->gs_model->get_one('gs_value', 'ms_general_settings', 'PRM1_APPVERSION')
-	// 				);
-	//
-	// 				$this->session->set_userdata($data_session);
-	//
-	// 				if ($this->session->userdata('uuid_ms_subsystem') == GLOBAL_PARAM_UUID_SUBSYSTEM_ADMIN) {
-	// 					redirect('admin/home');
-	// 				} elseif ($this->session->userdata('uuid_ms_subsystem') == GLOBAL_PARAM_UUID_SUBSYSTEM_EXPERT) {
-	// 					redirect('expert/home');
-	// 				} elseif ($this->session->userdata('uuid_ms_subsystem') == GLOBAL_PARAM_UUID_SUBSYSTEM_CLIENT) {
-	// 					redirect('client/home');
-	// 				} else {
-	// 					$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Invalid Subsystem, Please contact your Administrator or Web Master!</div>');
-	// 	        redirect('');
-	// 					// var_dump($this->session->userdata('full_name'));
-	// 				}
-	// 			} else {
-	// 				$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Your account has been logged in on another device, please log out first</div>');
-	// 				redirect('');
-	// 			}
-	// 		} else {
-	// 			$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Your account is expired, please contact your Administrator or Web Master!</div>');
-	// 			redirect('');
-	// 		}
-	// 	 } else {
-	// 		 $this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Wrong username or password!</div>');
-	// 		 redirect('');
-	// 	 }
-	// }
-	//
+	public function authentication() {
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+
+		$where = array(
+			'USERNAME' => $username,
+			'PASSWORD' => md5($password)
+		);
+
+		$result = $this->auth_model->login_validate('ms_user', $where)->num_rows();
+
+		if($result>0) {
+			if($this->auth_model->get_is_deleted('ISDELETED', 'ms_user', $username) == "0") {
+				if($this->auth_model->get_is_logged_in('ISLOGGEDIN', 'ms_user', $username) == "0") {
+					$this->auth_model->is_logged_in_update($username, "1");
+					$data_session = array(
+						'USERNAME' => $username,
+						'FULLNAME' => $this->auth_model->get_one('FULLNAME', 'ms_user', $username),
+						'ROLESVALUE' => $this->auth_model->get_one('ROLESVALUE', 'ms_user', $username),
+						'UUIDMSUSER' => $this->auth_model->get_one('UUIDMSUSER', 'ms_user', $username),
+						'CREATEDDATE' => $this->auth_model->get_one('CREATEDDATE', 'ms_user', $username),
+						'ISLOGGEDIN' => $this->auth_model->get_one('ISLOGGEDIN', 'ms_user', $username)
+					);
+
+					$this->session->set_userdata($data_session);
+
+					if ($this->session->userdata('ROLESVALUE') == super_administrator) {
+						redirect('superadmin/home');
+					} elseif ($this->session->userdata('ROLESVALUE') == elawyer_administrator) {
+						redirect('');
+					} elseif ($this->session->userdata('ROLESVALUE') == consultant) {
+						redirect('');
+					} elseif ($this->session->userdata('ROLESVALUE') == lawyer) {
+						redirect('');
+					} elseif ($this->session->userdata('ROLESVALUE') == client) {
+						redirect('');
+					} elseif ($this->session->userdata('ROLESVALUE') == finance) {
+						redirect('');
+					} else {
+						$this->session->set_flashdata('msg','<div class="alert bg-red text-center">Invalid Subsystem, Please contact your Administrator or Web Master!</div>');
+		        redirect('');
+						// var_dump($this->session->userdata('full_name'));
+					}
+				} else {
+					$this->session->set_flashdata('msg','<div class="alert bg-red text-center">Your account has been logged in on another device, please log out first</div>');
+					redirect('');
+				}
+			} else {
+				$this->session->set_flashdata('msg','<div class="alert bg-red text-center">Your account is expired, please contact your Administrator or Web Master!</div>');
+				redirect('');
+			}
+		 } else {
+			 $this->session->set_flashdata('msg','<div class="alert bg-red text-center">Wrong username or password!</div>');
+			 redirect('');
+		 }
+	}
+
 	public function registration() {
 		$this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[20]');
 		$this->form_validation->set_rules('full_name', 'Full Name', 'required|min_length[5]|max_length[25]');
@@ -92,14 +97,14 @@ class Auth extends CI_Controller {
 
 			if( $username_check == NULL && $email_check == NULL) {
 				if ($this->user_model->insert_user($data)) {
-					$this->session->set_flashdata('msg','<div class="alert alert-success text-center">You are Successfully Registered! Please contact your Administrator to verify your account</div>');
+					$this->session->set_flashdata('msg','<div class="alert bg-green text-center">You are Successfully Registered! Please contact your Administrator to verify your account</div>');
 	        redirect('auth/registration');
 				} else {
-					$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Oops! There is something wrong</div>');
+					$this->session->set_flashdata('msg','<div class="alert bg-red text-center">Oops! There is something wrong</div>');
 	        redirect('auth/registration');
 				}
 			} else {
-				$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">username or email already used! please use another username or email!</div>');
+				$this->session->set_flashdata('msg','<div class="alert bg-red text-center">username or email already used! please use another username or email!</div>');
 				redirect('auth/registration');
 			}
 		}

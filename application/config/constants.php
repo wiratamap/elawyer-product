@@ -99,7 +99,7 @@ define('copyright_link', 'https://pastijadi.id');
 | USER ROLES VALUE
 |--------------------------------------------------------------------------
 */
-define('super_administratorr', 'UR0001');
+define('super_administrator', 'UR0001');
 define('elawyer_administrator', 'UR0002');
 define('consultant', 'UR0003');
 define('lawyer', 'UR0004');
