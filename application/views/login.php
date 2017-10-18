@@ -5,7 +5,11 @@
         </div>
         <div class="card">
             <div class="body">
-                <form id="sign_in" method="POST">
+                <div>
+                    <?php echo $this->session->flashdata('msg'); ?>
+                </div>
+                <?php echo validation_errors(); ?>
+                <?php echo form_open('auth/authentication'); ?>
                     <div class="msg">Sign in to start your session</div>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -24,10 +28,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- <div class="col-xs-8 p-t-5">
-                            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">Remember Me</label>
-                        </div> -->
                         <div class="col-xs-12">
                             <button class="btn btn-block bg-indigo waves-effect" type="submit">SIGN IN</button>
                         </div>
@@ -40,7 +40,7 @@
                             <a href="forgot-password.html">Forgot Password?</a>
                         </div> -->
                     </div>
-                </form>
+                <?php echo form_close(); ?>
             </div>
         </div>
         <div class="logo">
