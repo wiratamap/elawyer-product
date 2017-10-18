@@ -110,12 +110,12 @@ class Auth extends CI_Controller {
 		}
 	}
 	//
-	// public function logout() {
-	// 	$username = $this->session->userdata('username');
-	// 	$this->auth_model->is_logged_in_update($username, "0");
-	//
-	// 	$this->session->sess_destroy();
-	// 	// session_destroy();
-	// 	redirect('auth');
-	// }
+	public function logout() {
+		$username = $this->session->userdata('USERNAME');
+		$this->auth_model->is_logged_in_update($username, "0");
+
+		$this->session->sess_destroy();
+		// session_destroy();
+		redirect('auth');
+	}
 }

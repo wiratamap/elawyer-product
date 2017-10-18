@@ -17,7 +17,9 @@ class Superadmin extends CI_Controller {
 	}
 
 	public function home() {
+		$this->load->view('layout-templates/superadmin/navbar-home');
 		$this->load->view('superadmin/home');
+		$this->load->view('layout-templates/superadmin/footer');
 	}
 
 	// public function list_user() {
