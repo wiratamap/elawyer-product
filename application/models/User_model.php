@@ -26,13 +26,13 @@ class User_model extends CI_Model {
     $query = $this->db->get();
     return $query->result();
   }
-  //
-  // public function get_all_user() {
-  //   $query = $this->db->query("select ms_user.*, ms_subsystem.subsystem_value
-  //                              from ms_user
-  //                              left join ms_subsystem on ms_user.uuid_ms_subsystem=ms_subsystem.uuid_ms_subsystem");
-  //   return $query->result();
-  // }
+
+  public function get_all_user() {
+    $this->db->select("*");
+    $this->db->from("vw_list_users");
+    $query = $this->db->get();
+    return $query->result();
+  }
   //
   // public function delete($uuid_ms_user) {
   //   $this->db->where('uuid_ms_user', $uuid_ms_user);

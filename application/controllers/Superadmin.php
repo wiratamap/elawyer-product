@@ -9,6 +9,10 @@ class Superadmin extends CI_Controller {
 		if(empty($this->session->userdata('ISLOGGEDIN')) && $this->session->userdata('ROLESVALUE') != super_administrator) {
 			$this->session->set_flashdata('msg','<div class="alert bg-red text-center">You dont have an access to view this page!</div>');
 			redirect('');
+		} else {
+			$this->load->view('layout-templates/superadmin/header');
+			$this->load->view('layout-templates/superadmin/navbar');
+			$this->load->view('layout-templates/superadmin/footer');
 		}
 	}
 
@@ -17,16 +21,14 @@ class Superadmin extends CI_Controller {
 	}
 
 	public function home() {
-		$this->load->view('layout-templates/superadmin/header');
-		$this->load->view('layout-templates/superadmin/navbar');
 		$this->load->view('superadmin/home');
-		$this->load->view('layout-templates/superadmin/footer');
 	}
 
-	// public function list_user() {
-	// 	$data['user'] = $this->user_model->get_all_user();
-	// 	$this->load->view('admin/list_user', array('data_user' => $data['user']));
-	// }
+	public function list_user() {
+		$data['user'] = $this->user_model->get_all_user();
+
+		$this->load->view('superadmin/list_user', array('data_user' => $data['user']));
+	}
   //
 	// public function add_user() {
 	// 	$this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[15]');

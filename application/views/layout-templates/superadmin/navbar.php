@@ -68,7 +68,7 @@
                             <span>User Management</span>
                         </a>
                         <ul class="ml-menu">
-                            <li <?php if($this->uri->segment(2)!= ("home" || "create-user" || "list-user")){echo 'class="active"';}?> >
+                            <li <?php if( ($this->uri->segment(2) == "create-user-roles") || ($this->uri->segment(2) == "list-user-roles") ){echo 'class="active"';}?> >
                                 <a href="javascript:void(0);" class="menu-toggle">
                                     <i class="material-icons">people</i>
                                     <span>Group Access Roles</span>
@@ -88,7 +88,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li <?php if($this->uri->segment(2)!= ("home" || "create-user-roles" || "list-user-roles") ){echo 'class="active"';}?> >
+                            <li <?php if( ($this->uri->segment(2) == "create-user") || ($this->uri->segment(2) == "list-user") ){echo 'class="active"';}?> >
                                 <a href="javascript:void(0);" class="menu-toggle">
                                     <i class="material-icons">person</i>
                                     <span>User</span>
@@ -101,9 +101,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);">
+                                        <a <?php if($this->uri->segment(2)=="list-user"){echo 'href="#"';} else {echo 'href="'.base_url('superadmin/list-user').'"'; }?> >
                                           <i class="material-icons">view_list</i>
-                                          <span>List User Roles</span>
+                                          <span>List User</span>
                                         </a>
                                     </li>
                                 </ul>

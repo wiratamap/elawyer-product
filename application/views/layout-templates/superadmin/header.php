@@ -28,6 +28,9 @@
     <!-- Custom Css -->
     <link href="<?php echo base_url('assets/css/style.css'); ?>" rel="stylesheet">
 
+    <!-- JQuery DataTable Css -->
+    <link href="<?php echo base_url('assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css'); ?>" rel="stylesheet">
+
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo base_url('assets/css/themes/all-themes.css'); ?>" rel="stylesheet" />
 </head>
