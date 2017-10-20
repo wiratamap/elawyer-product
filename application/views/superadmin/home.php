@@ -1,7 +1,12 @@
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>TABS</h2>
+          <ol class="breadcrumb breadcrumb-bg-red">
+            <li class="active"><i class="material-icons">home</i> Home</li>
+            <!-- <li><a href="javascript:void(0);"><i class="material-icons">library_books</i> Library</a></li> -->
+            <!-- <li><a href="javascript:void(0);"><i class="material-icons">archive</i> Data</a></li> -->
+            <!-- <li class="active"><i class="material-icons">attachment</i> File</li> -->
+          </ol>
         </div>
         <!-- Tabs With Custom Animations -->
         <div class="row clearfix">
