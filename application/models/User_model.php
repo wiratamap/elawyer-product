@@ -33,26 +33,29 @@ class User_model extends CI_Model {
     $query = $this->db->get();
     return $query->result();
   }
-  //
-  // public function delete($uuid_ms_user) {
-  //   $this->db->where('uuid_ms_user', $uuid_ms_user);
-  //   $this->db->delete('ms_user');
-  // }
-  //
-  // public function get_one($select, $table, $param) {
-  //   $this->db->select($select);
-  //   $this->db->from($table);
-  //   $this->db->where('uuid_ms_user', $param);
-  //   $query = $this->db->get();
-  //   $result = $query->row();
-  //   return $result;
-  // }
-  //
-  // public function update($data) {
-  //   $this->db->set('dtm_upd', 'CURRENT_TIME()', FALSE);
-  //   $this->db->where('username', $data['username']);
-  //   $this->db->update('ms_user', $data);
-  //   return true;
-  // }
+
+  public function delete($UUIDMSUSER, $user_info) {
+      $this->db->set('UPDATEDDATE', 'CURRENT_TIME()', FALSE);
+      $this->db->set('ISDELETED', '1', FALSE);
+      $this->db->where('UUIDMSUSER', $UUIDMSUSER);
+      $this->db->update('ms_user', $user_info);
+      return true;
+  }
+
+  public function get_one($select, $table, $param) {
+    $this->db->select($select);
+    $this->db->from($table);
+    $this->db->where('UUIDMSUSER', $param);
+    $query = $this->db->get();
+    $result = $query->row();
+    return $result;
+  }
+
+  public function update($data, $UUIDMSUSER) {
+    $this->db->set('UPDATEDDATE', 'CURRENT_TIME()', FALSE);
+    $this->db->where('UUIDMSUSER', $UUIDMSUSER);
+    $this->db->update('ms_user', $data);
+    return true;
+  }
 }
 ?>
