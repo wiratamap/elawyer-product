@@ -64,42 +64,47 @@ class Superadmin extends CI_Controller {
 	// 		}
 	// 	}
 	// }
-  //
-	// public function delete_user($uuid_ms_user) {
-	// 	$this->user_model->delete($uuid_ms_user);
-	// 	$this->session->set_flashdata('msg','<div class="alert alert-success text-center">User successfully deleted!</div>');
-	// 	redirect('admin/list-user');
-	// }
-  //
-	// public function edit_user($uuid_ms_user) {
-	// 	$data['user'] = $this->user_model->get_one('*', 'ms_user', $uuid_ms_user);
-	// 	$this->load->view('admin/edit_user', $data);
-	// }
-  //
-	// public function update_user() {
-	// 	$this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[15]');
-	// 	$this->form_validation->set_rules('full_name', 'Full Name', 'required|min_length[5]|max_length[30]');
-  //   $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-	// 	$this->form_validation->set_rules('is_active', 'Active Status', 'less_than_equal_to[1]');
-  //
-	// 	if ($this->form_validation->run() == FALSE) {
-	// 		 $this->load->view('admin/list_user');
-	// 	} else {
-	// 		$data = array(
-	//       'full_name' => $this->input->post('full_name'),
-	//       'username' => $this->input->post('username'),
-	//       'email' => $this->input->post('email'),
-	// 			'is_active' => $this->input->post('is_active')
-	// 	  );
-	// 		if ($this->user_model->update($data)) {
-	// 			$this->session->set_flashdata('msg','<div class="alert alert-success text-center">User successfully updated!</div>');
-  //       redirect('admin/list-user');
-	// 		} else {
-	// 			$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Oops! There is something wrong</div>');
-  //       redirect('admin/list-user');
-	// 		}
-	// 	}
-	// }
+
+	public function delete_user($UUIDMSUSER) {
+		$user_info['UPDATEDBY'] = $this->session->userdata('USERNAME');
+		$this->user_model->delete($UUIDMSUSER, $user_info);
+		$this->session->set_flashdata('msg','<div class="alert bg-green text-center alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User successfully suspended!</div>');
+
+		redirect('superadmin/list-user');
+	}
+
+	public function edit_user($UUIDMSUSER) {
+		$data['user'] = $this->user_model->get_one('*', 'ms_user', $UUIDMSUSER);
+		$userroles['data'] = $this->userroles_model->get_all_user_roles();
+		$this->load->view('superadmin/edit_user', array('user' => $data['user'],
+																										'userroles' => $userroles['data']));
+	}
+
+	public function update_user($UUIDMSUSER) {
+		$this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[20]');
+		$this->form_validation->set_rules('fullname', 'Full Name', 'required|min_length[5]|max_length[25]');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('isdeleted', 'Active Status', 'less_than_equal_to[1]');
+
+		if ($this->form_validation->run() == FALSE) {
+			 $this->load->view('superadmin/edit-user', $UUIDMSUSER);
+		} else {
+			$data = array(
+	      'FULLNAME' => $this->input->post('username'),
+	      'USERNAME' => $this->input->post('fullname'),
+	      'EMAIL' => $this->input->post('email'),
+				'ISDELETED' => $this->input->post('isdeleted'),
+				'UPDATEDBY' => $this->session->userdata('USERNAME')
+		  );
+			if ($this->user_model->update($data, $UUIDMSUSER)) {
+				$this->session->set_flashdata('msg','<div class="alert bg-green text-center alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>User successfully updated!</div>');
+        redirect('superadmin/edit-user/'.$UUIDMSUSER);
+			} else {
+				$this->session->set_flashdata('msg','<div class="alert bg-red text-center alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Oops! There is something wrong</div>');
+        redirect('superadmin/edit-user/'.$UUIDMSUSER);
+			}
+		}
+	}
 
 	// public function list_inbox() {
 	// 	$data['inbox'] = $this->mail_model->get_all_inbox($this->session->userdata('uuid_ms_user'));
