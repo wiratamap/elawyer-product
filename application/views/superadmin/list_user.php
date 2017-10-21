@@ -2,9 +2,8 @@
     <div class="container-fluid">
         <div class="block-header">
           <ol class="breadcrumb breadcrumb-bg-red">
-            <li class="active"><i class="material-icons">home</i> Home</li>
-            <!-- <li><a href="javascript:void(0);"><i class="material-icons">library_books</i> Library</a></li> -->
-            <!-- <li><a href="javascript:void(0);"><i class="material-icons">archive</i> Data</a></li> -->
+            <li><a href=<?php echo base_url('superadmin/home'); ?>><i class="material-icons">home</i> Home</a></li>
+            <li class="active"><i class="material-icons">people</i> List User</a></li>
             <!-- <li class="active"><i class="material-icons">attachment</i> File</li> -->
           </ol>
         </div>
@@ -15,20 +14,11 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            BASIC EXAMPLE
+                            USER LIST
                         </h2>
-                        <ul class="header-dropdown m-r--5">
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);">Action</a></li>
-                                    <li><a href="javascript:void(0);">Another action</a></li>
-                                    <li><a href="javascript:void(0);">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <div>
+                            <?php echo $this->session->flashdata('msg'); ?>
+                        </div>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -79,15 +69,15 @@
                                       echo '<td>'.$row->CREATEDDATE.'</td>';
                                       echo '<td>'.$row->NAME.'</td>';
 
-                                      echo '<td>
-                                        <a href="edit-user/'.$row->UUIDMSUSER.'" role="button" class="btn btn-circle waves-circle bg-primary waves-effect"><i class="material-icons">border_color</i></a>';
+                                      echo '<td align="center">
+                                        <a href="edit-user/'.$row->UUIDMSUSER.'" role="button" class="btn btn-circle waves-circle bg-blue waves-effect waves-float"><i class="material-icons">border_color</i></a>';
                                       if($row->USERNAME != $this->session->userdata('USERNAME')) {
-                                        echo '<a href="delete-user/'.$row->UUIDMSUSER.'" role="button" class="btn btn-circle waves-circle bg-red waves-effect"><i class="material-icons">delete</i></a>';
+                                        echo '<a href="delete-user/'.$row->UUIDMSUSER.'" role="button" class="btn btn-circle waves-circle bg-red waves-effect waves-float"><i class="material-icons">delete</i></a>';
                                       } else {
-                                        echo '<button type="button" class="btn btn-circle waves-circle bg-red waves-effect" disabled><i class="material-icons">delete</i></button>';
+                                        echo '<button type="button" class="btn btn-circle waves-circle bg-red waves-effect waves-float" disabled><i class="material-icons">delete</i></button>';
                                       }
 
-                                      echo '</div>';
+                                      // echo '</div>';
                                       echo '</tr>';
                                     }
                                   ?>
